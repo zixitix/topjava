@@ -17,7 +17,7 @@
 
    
 #### Apply 7_02_HW6_meals.patch
-При переходе на AJAX `JspMealController` удалим за ненадобностью, возвращение всей еды `meals()` останется в `RootController`.
+При переходе на AJAX `JspMealController` удалим за ненадобностью, возвращение всей еды `allMeals()` останется в `RootController`.
 
 #### Apply 7_03_HW6_fix_relative_url_utf8.patch
 -  <a href="http://stackoverflow.com/questions/4764405/how-to-use-relative-paths-without-including-the-context-root-name">Relative paths in JSP</a>
@@ -31,7 +31,7 @@
 - В `JpaUserRepositoryImpl.getByEmail` DISTINCT попадает в запрос, хотя он там не нужен. Это просто указание Hibernate не дублировать данные.
 Для оптимизации можно указать Hibernate делать запрос без distinct: [15.16.2. Using DISTINCT with entity queries](https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#hql-distinct)
 - Тест `DataJpaUserServiceTest.testGetWithMeals()` не работает для admin (у админа 2 роли и еда при JOIN дублируется). `DISTINCT` при несколький JOIN не помогает.
-Оставил в графе только `meals`. Корректно поставить тип `LOAD`, чтобы остальные ассоциации доставались по стратегии модели. Однако [с типом по умолчанию `FETCH` роли также достаются](https://stackoverflow.com/a/46013654/548473)  (похоже что бага).
+Оставил в графе только `allMeals`. Корректно поставить тип `LOAD`, чтобы остальные ассоциации доставались по стратегии модели. Однако [с типом по умолчанию `FETCH` роли также достаются](https://stackoverflow.com/a/46013654/548473)  (похоже что бага).
 
 #### Apply 7_06_HW6_optional_jdbc.patch
 > - реализовал в `JdbcUserRepositoryImpl.getAll()` доставание ролей через лямбду
@@ -140,7 +140,7 @@ hamcrest-all используется в проверках `RootControllerTest`
 
 Да, Spring смотрит в classpath и, если видит там Jackson, то подключает интеграцию с ним
 
->  Где-то слышал, что любой ресурс по REST должен однозначно идентифицироваться через url, без параметров. Правильно ли задавать URL для фильтрации в виде `http://localhost/topjava/rest/meals/filter/{startDate}/{startTime}/{endDate}/{endTime}` ?
+>  Где-то слышал, что любой ресурс по REST должен однозначно идентифицироваться через url, без параметров. Правильно ли задавать URL для фильтрации в виде `http://localhost/topjava/rest/allMeals/filter/{startDate}/{startTime}/{endDate}/{endTime}` ?
 
 Так делают, только при отношении <a href="https://ru.wikipedia.org/wiki/Диаграмма_классов#.D0.90.D0.B3.D1.80.D0.B5.D0.B3.D0.B0.D1.86.D0.B8.D1.8F">агрегация</a>. В случае критериев, поиска или страничных данных они передаются как параметр. Смотри также:
 - [15 тривиальных фактов о правильной работе с протоколом HTTP](https://habrahabr.ru/company/yandex/blog/265569/)
@@ -153,7 +153,7 @@ hamcrest-all используется в проверках `RootControllerTest`
 ## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Домашнее задание HW07
 
 - 1: Добавить тесты контроллеров:
-  - 1.1 `RootControllerTest.testMeals` для `meals.jsp`
+  - 1.1 `RootControllerTest.testMeals` для `allMeals.jsp`
   - 1.2 `ResourceControllerTest` для `style.css` (проверить status и ContentType)
 - 2: Реализовать `MealRestController` и протестировать его через `MealRestControllerTest`
   - 2.1 cледите чтобы url в тестах совпадал с параметрами в методе контроллера. Можно добавить логирование `<logger name="org.springframework.web" level="debug"/>` для проверки маршрутизации.
@@ -177,5 +177,5 @@ hamcrest-all используется в проверках `RootControllerTest`
 - 5: При проблемах с собственным форматтером убедитесь, что в конфигурации `<mvc:annotation-driven...` не дублируется
 - 6: **Проверьте выполение ВСЕХ тестов через maven**. В случае проблем проверьте, что не портите константу из `MealTestData`
 - 7: `@Autowired` в тестах нужно делать в том месте, где класс будет использоваться. Общий принцип: не размазывать код по классам, объявление переменных держать как можно ближе к ее использованию, группировать (не смешивать) код с разной функциональностью.
-- 8: Попробуйте в `RootControllerTest.testMeals` сделать сравнение через `model().attribute("meals", expectedValue)`. Учтите, что вывод результатов через `toString` к сравнению отношения не имеет
+- 8: Попробуйте в `RootControllerTest.testMeals` сделать сравнение через `model().attribute("allMeals", expectedValue)`. Учтите, что вывод результатов через `toString` к сравнению отношения не имеет
 - 9: Посмотрите, нет ли в `MealTestData` методов, которые можно сделать общими (через generic и `TestUtil`)

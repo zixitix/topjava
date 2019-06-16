@@ -153,7 +153,7 @@
   - [i18n в JavaScript](http://stackoverflow.com/a/6242840/548473)
   - проверку предусловий и видео <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFU005ZzBNZmZnTVU">Методы улучшения качества кода</a>
   - интеграцию с <a href="https://www.codacy.com/">проверкой кода в Codacy</a>
-  - [сравнение вермени исполнения запросов при различных meals индексах](https://drive.google.com/open?id=0B9Ye2auQ_NsFX3RLcnJCWmQ2Y0U)
+  - [сравнение вермени исполнения запросов при различных allMeals индексах](https://drive.google.com/open?id=0B9Ye2auQ_NsFX3RLcnJCWmQ2Y0U)
 - tomcat7-maven-plugin плагин перключили на Tomcat 8 (cargo-maven2-plugin)
 - рефакторинг 
   - обработка ошибок сделал с array
@@ -163,7 +163,7 @@
 ### Topjava 3-6
 - добавил
   - [выпускной проект](https://drive.google.com/open?id=0B9Ye2auQ_NsFcG83dEVDVTVMamc)
-  - в таблицу meals составной индекс 
+  - в таблицу allMeals составной индекс 
   - константы `Profiles.ACTIVE_DB`, `Profiles.DB_IMPLEMENTATION`
   - проверки и тесты на `NotFound` для `UserMealService.getWithUser` и  `UserService.getWithMeals`
   - в MockMvc фильтр CharacterEncodingFilter
