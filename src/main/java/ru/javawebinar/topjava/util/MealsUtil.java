@@ -16,8 +16,9 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
-    public static void main(String[] args) {
-        List<Meal> meals = Arrays.asList(
+    private static List<Meal> meals;
+    static {
+         meals = Arrays.asList(
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500),
@@ -25,12 +26,19 @@ public class MealsUtil {
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
+    }
+/*    public static void main(String[] args) {
+
         List<MealTo> mealsWithExcess = getFilteredWithExcess(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
         mealsWithExcess.forEach(System.out::println);
 
         System.out.println(getFilteredWithExcessByCycle(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExcessInOnePass(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExcessInOnePass2(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+    }*/
+
+    public static List<Meal> getMeals() {
+        return meals;
     }
 
     public static List<MealTo> getFilteredWithExcess(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
@@ -103,6 +111,37 @@ public class MealsUtil {
                 ).values();
 
         return values.stream().flatMap(identity()).collect(toList());
+    }
+
+    public static List<MealTo> getWithExceeded(List<Meal> meals, int border){
+        Map<LocalDate,List<Meal>> mealsByDate = new HashMap<>();
+        List<MealTo> result = new ArrayList<>();
+        for(Meal meal : meals){
+            if(mealsByDate.containsKey(meal.getDate())){
+                mealsByDate.get(meal.getDate()).add(meal);
+            }else{
+                mealsByDate.put(meal.getDate(),new ArrayList<>());
+                mealsByDate.get(meal.getDate()).add(meal);
+            }
+        }
+        for(Map.Entry<LocalDate, List<Meal>> entry : mealsByDate.entrySet()){
+           int calories = 0;
+            for(Meal meal : entry.getValue()){
+                calories = meal.getCalories()+calories;
+            }
+            if(calories > border){
+                for(Meal meal : entry.getValue()){
+                   result.add(new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(),true));
+                }
+            }else{
+                for(Meal meal : entry.getValue()){
+                    result.add(new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(),false));
+                }
+            }
+
+
+        }
+        return result;
     }
 
     private static MealTo createWithExcess(Meal meal, boolean excess) {
