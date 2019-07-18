@@ -1,5 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cddba7e3ff544288b1ccfbc5f8b56c35)](https://www.codacy.com/app/zixitix/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zixitix/topjava&amp;utm_campaign=Badge_Grade)
-
 Java Enterprise Online Project 
 ===============================
 
