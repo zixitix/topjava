@@ -1,7 +1,7 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cddba7e3ff544288b1ccfbc5f8b56c35)](https://www.codacy.com/app/zixitix/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=zixitix/topjava&amp;utm_campaign=Badge_Grade)
-
 Java Enterprise Online Project 
 ===============================
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/67339cf238224f03a8d4224882d68b12)](https://app.codacy.com/app/zixitix/topjava?utm_source=github.com&utm_medium=referral&utm_content=zixitix/topjava&utm_campaign=Badge_Grade_Dashboard)
 
 Разработка полнофункционального Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей с использованием наиболее популярных инструментов и технологий Java: Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson), Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API и хранением в базах данных Postgresql и HSQLDB.
 
