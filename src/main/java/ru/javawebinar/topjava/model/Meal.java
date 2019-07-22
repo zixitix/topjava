@@ -1,19 +1,46 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+@NamedQueries({
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal u WHERE u.id=:id and u.user.id=:user_id"),
+        @NamedQuery(name = Meal.GET_BETWEEN, query = "SELECT u FROM Meal u WHERE u.dateTime BETWEEN :start_date AND :end_time"),
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT u FROM Meal u ORDER BY u.description"),
+})
+@Entity
+@Table(name = "meals")
 public class Meal extends AbstractBaseEntity {
+
+    public static final String DELETE = "Meal.delete";
+    public static final String GET_BETWEEN = "Meal.getBetween";
+    public static final String ALL_SORTED = "Meal.getAllSorted";
+
+
+    @Column(name = "date_Time", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
 
+    @Column(name = "description", nullable = false)
+    @NotBlank
+    @Size(max = 100)
     private String description;
-
+    @Column(name = "calories", nullable = false)
+    @NotNull
     private int calories;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    //@LazyToOne(LazyToOneOption.PROXY)
+    @ManyToOne(optional = false)
+    @JoinColumn(name="user_id", nullable=false,insertable=false,updatable=false )
     private User user;
 
     public Meal() {
@@ -62,6 +89,8 @@ public class Meal extends AbstractBaseEntity {
         this.calories = calories;
     }
 
+   /* @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name = "user_id",nullable = false)*/
     public User getUser() {
         return user;
     }
