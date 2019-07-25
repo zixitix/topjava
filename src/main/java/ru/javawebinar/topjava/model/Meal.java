@@ -40,7 +40,8 @@ public class Meal extends AbstractBaseEntity {
 
     //@LazyToOne(LazyToOneOption.PROXY)
     @ManyToOne(optional = false)
-    @JoinColumn(name="user_id", nullable=false,insertable=false,updatable=false )
+    @JoinColumn(name="user_id",referencedColumnName="id", nullable=false)
+    @NotNull
     private User user;
 
     public Meal() {
@@ -89,8 +90,8 @@ public class Meal extends AbstractBaseEntity {
         this.calories = calories;
     }
 
-   /* @ManyToOne(fetch = FetchType.LAZY, optional=false)
-    @JoinColumn(name = "user_id",nullable = false)*/
+    /* @ManyToOne(fetch = FetchType.LAZY, optional=false)
+     @JoinColumn(name = "user_id",nullable = false)*/
     public User getUser() {
         return user;
     }

@@ -29,11 +29,13 @@ public class JpaMealRepository implements MealRepository {
             em.persist(meal);
             return meal;
         }else{
-            Hibernate.initialize(meal.getUser());
-            if(meal.getUser().getId() == userId){
-                return em.merge(meal);
-            }else{
+
+            // Hibernate.initialize(meal.getUser());
+            if(get(meal.getId(),userId) == null){
                 return null;
+            }else{
+                 em.merge(meal);
+                return meal;
             }
         }
 
@@ -54,12 +56,12 @@ public class JpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-         Meal m = em.find(Meal.class,id);
-            if(m.getUser().getId() == userId) {
+        Meal m = em.find(Meal.class,id);
+        if(m.getUser().getId() == userId) {
             return m;
-            }else{
-                return null;
-            }
+        }else{
+            return null;
+        }
 
     }
 
