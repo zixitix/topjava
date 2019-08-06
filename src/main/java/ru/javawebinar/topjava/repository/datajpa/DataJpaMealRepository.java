@@ -12,30 +12,41 @@ import java.util.List;
 public class DataJpaMealRepository implements MealRepository {
 
     @Autowired
+    private CrudUserRepository crudUserRepository;
+
+    @Autowired
     private CrudMealRepository crudRepository;
 
     @Override
     public Meal save(Meal meal, int userId) {
-        return null;
+        meal.setUser(crudUserRepository.getOne(userId));
+
+        if(!meal.isNew()&&get(meal.getId(),userId)==null){
+            return null;
+        }else{
+
+            return crudRepository.save(meal);
+        }
+
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return false;
+        return crudRepository.delete(id,userId) !=0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        return null;
+        return crudRepository.get(id,userId);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return null;
+        return getAll(userId);
     }
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return null;
+        return crudRepository.getBetween( startDate, endDate, userId);
     }
 }
