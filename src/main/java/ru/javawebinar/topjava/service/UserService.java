@@ -22,6 +22,7 @@ public class UserService {
     @Autowired
     public UserService(UserRepository repository) {
         this.repository = repository;
+        /*asd*/
     }
 
     @CacheEvict(value = "users", allEntries = true)
