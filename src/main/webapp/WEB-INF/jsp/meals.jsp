@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <head>
     <title>Meal</title>
     <link rel="stylesheet" href="css/style.css">
@@ -62,5 +64,6 @@
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
